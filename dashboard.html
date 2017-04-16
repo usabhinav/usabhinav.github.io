@@ -13,9 +13,12 @@
 	<script src="assets/js/main.js"></script>
  	<script>
  		var username = "Hillary";
- 		if (localStorage.key(0) == null){
+		/*
+ 		if (localStorage.key(0).indexOf("Firebase.")){
  			window.location = "index.html";
  		}
+		*/
+		console.log(localStorage.key(0));
 		$(document).ready(function(){
 			$('body').append('<section id="three" class="wrapper style3 special"><div class="inner">\
 <header class="major"><h4 style="font-size: 150%">' + localStorage.key(0) + "'" + 's Items</h4>\
