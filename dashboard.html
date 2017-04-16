@@ -16,12 +16,18 @@
 <h4 style="font-size: 150%">' + localStorage.key(0) + apostrophe + 's Items</h4><p>This page contains all of your reminders<br />\
 </p></header></div></section>');
                 });
+		
 		var username = "Hillary";
 		if (localStorage.key(0) == null){
 			window.location = "index.html";
 		}
-		var arr = createBoard();
-		createGrid(username, arr);
+		
+		start();
+		
+		function start(){
+			var arr = createBoard();
+			createGrid(username, arr);
+		}
 
 		function createBoard(){
 			var config = {
