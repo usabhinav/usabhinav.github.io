@@ -16,11 +16,19 @@
  			window.location = "index.html";
  		}
 		$(document).ready(function(){
-			$('body').append("<h3 style='text-align:center'>Transit Time</h3>\
-<p style='text-align:center'>Approximately 1 hour and 35 minutes</p>");
+			$('body').append('<section id="three" class="wrapper style3 special"><div class="inner">\
+<header class="major"><h4 style="font-size: 150%">' + localStorage.key(0) + "'" + 's Items</h4>\
+<p>This page contains all of your reminders<br /></p></header></div></section>');
 		});
- 		var arr = createBoard();
- 		createGrid(username, arr);
+		start();
+		function start(){
+			$(document).ready(function(){
+				$('body').append("<h3 style='text-align:center'>Transit Time</h3>\
+	<p style='text-align:center'>Approximately 1 hour and 35 minutes</p>");
+			});
+			var arr = createBoard();
+			createGrid(username, arr);
+		}
  		
  		function createBoard(){
  			var config = {
@@ -117,6 +125,7 @@
  
 
  <body>
+	 <!--
  			<section id="three" class="wrapper style3 special">
  						<div class="inner">
  						<header class="major">
@@ -126,6 +135,7 @@
  							</header>
  							</div>
  							</section>
+-->
  				
  
  
