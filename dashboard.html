@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Test</title>
+	<link href="assets/css/main.css" rel="stylesheet" type="text/css">
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase-messaging.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+                $(document).ready(function(){
+                    var apostrophe = "'";
+                    $('body').append('<section id="three" class="wrapper style3 special"><div class="inner"><header class="major">\
+<h4 style="font-size: 150%">' + localStorage.key(0) + apostrophe + 's Items</h4><p>This page contains all of your reminders<br />\
+</p></header></div></section>');
+                });
+		var username = "Hillary";
+		if (username == null){
+			window.location = "index.html";
+		}
+		var arr = createBoard();
+		createGrid(username, arr);
+
+		function createBoard(){
+			var config = {
+			  apiKey: "AIzaSyACzJiPYH2j2S3521ycLphzXEevjgjqTPI",
+			  authDomain: "motif-149c1.firebaseapp.com",
+			  databaseURL: "https://motif-149c1.firebaseio.com",
+			  projectId: "motif-149c1",
+			  storageBucket: "motif-149c1.appspot.com",
+			  messagingSenderId: "480479478221"
+	    };
+	    firebase.initializeApp(config);
+			var database = firebase.database();
+			var childs = [];
+			database.ref().on("value", function(snapshot){
+				snapshot.forEach(function(childSnapshot){
+					if(childs.indexOf(childSnapshot.child("message").val()) == -1){
+						childs.push(childSnapshot.child("message").val());
+					}
+	  		});
+				var cardArr = [];
+				for(var i=0;i<childs.length;i++){
+					cardArr.push(createCard(username ,childs[i], "yourmother"));
+				}
+				var finalString = '<ul class="features">';
+				for(var u=0;u<cardArr.length;u++){
+					finalString+=(cardArr[u]);
+				}
+				finalString += "</ul>";
+				$(document).ready(function() {
+					$('body').append(finalString);
+				});
+			});
+			return childs;
+		}
+
+		function createGrid(name, arr){
+			var cardArr = [];
+			for(var i=0;i<arr.length;i++){
+				cardArr.push(createCard(name ,arr[i], "yourmother"));
+			}
+			var finalString = '<ul class="features">';
+			for(var u=0;u<cardArr.length;u++){
+				finalString+=(cardArr[u]);
+			}
+			finalString+="</ul>";
+			$(document).ready(function() {
+				$('body').append(finalString);
+			});
+		}
+
+		function createCard(name,message,link){
+			var date = "<h3>"+retDate()+" April 2017"+"</h3>"
+			return "<li class='icon fa-paper-plane-o'><h3>"+name+"</h3>\
+	<p>"+message+"</p>"+retLink(message)+date+"</li>";
+		}
+		function retLink(msg){
+			console.log("parsed");
+			var query = prsString(msg);
+			query = query.trim();
+			var finalString = "";
+			if(goCheck(msg)){
+				var link = "https://www.google.com/maps/search/"+query+"/@37.553091,-122.3267554,10z/data=!3m1!4b1";
+				finalString = "<a href='"+link + "'>"+query+"</a>";
+			}else if(msg.indexOf("buy") != -1){
+				var link = "http://www.ebay.com/sch/i.html?_from=R40&_trksid=p2050601.m570.l1313.TR12.TRC2.A0.H0.X"+query+".TRS0&_nkw="+query+"&_sacat=0";
+				finalString = "<a href='"+link + "'>"+query+"</a>";
+			}
+			return finalString;
+		}
+		function prsString(msg){
+			var str = msg;
+			var keywords = ["meet", "go to", "will be at"];
+			for (var i = 0; i < keywords.length; i++){
+				if (str.indexOf(keywords[i]) != -1){
+					var word = keywords[i];
+					var nextIndex = str.indexOf(word) + word.length;
+					for (var x = 0; x < nextIndex; x++){
+						str = str.replace(str[0], "");
+					}
+					str = str.trim();
+					return str;
+				}
+			}
+			if(str.indexOf("buy") != -1){
+					var nextIndex = str.indexOf(word) + 4;
+					for (var x = 0; x < nextIndex; x++){
+						str = str.replace(str[0], "");
+					}
+					str = str.trim();
+					return str;
+			}
+			return "";
+		}
+		function retDate(){
+			var d = new Date();
+			var n = d.getDate();
+			if(Math.random() < 0.5){
+				return n;
+			}else{
+				return n-1;
+			}
+		}
+		function goCheck(msg){
+			return msg.indexOf("meet") != -1 || msg.indexOf("go to") != -1 || msg.indexOf("will be at") != -1;
+		}
+
+	</script>
+</head>
+
+<body>
+			<section id="three" class="wrapper style3 special">
+						<div class="inner">
+							</div>
+							</section>
+				
+
+
+</body>
+</html>
