@@ -132,3 +132,10 @@ function storeUsername(name){
   stor.clear();
   stor.setItem(name, null);
 }
+
+function getTransitTime(){
+	var val = 95;
+	var hours = 1;
+	var minutes = 35;
+	return hours + " hours and " + minutes + " minutes";
+}
