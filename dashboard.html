@@ -19,6 +19,8 @@
 			$('body').append('<section id="three" class="wrapper style3 special"><div class="inner">\
 <header class="major"><h4 style="font-size: 150%">' + localStorage.key(0) + "'" + 's Items</h4>\
 <p>This page contains all of your reminders<br /></p></header></div></section>');
+			$('body').append("<textarea>Day Count</textarea>");
+			$('body').append("<button type='button' onClick='start();'>Continue</button>");
 		});
 		start();
 		function start(){
